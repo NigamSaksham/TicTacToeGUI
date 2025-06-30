@@ -1,0 +1,121 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Random;
+
+public class TicTacToeGUI extends JFrame {
+    private JButton[][] buttons = new JButton[3][3];
+    private boolean playerTurn = true;
+    private Random rand = new Random();
+    private int playerScore = 0, computerScore = 0;
+
+    public TicTacToeGUI() {
+        setTitle("Tic Tac Toe");
+        setSize(400,400);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLayout(new GridLayout(3,3));
+
+        initBoard();
+
+        setVisible(true);
+    }
+
+    private void initBoard() {
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                buttons[i][j] = new JButton("");
+                buttons[i][j].setFont(new Font(Font.SANS_SERIF,Font.BOLD,60));
+                buttons[i][j].addActionListener(new ButtonListener(i,j));
+                add(buttons[i][j]);
+            }
+        }
+    }
+
+    private class ButtonListener implements ActionListener {
+        private int row, col;
+        public ButtonListener(int r, int c) {
+            row = r;
+            col = c;
+        }
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (buttons[row][col].getText().equals("")) {
+                buttons[row][col].setText("X");
+                if (checkWin("X")) {
+                    playerScore++;
+                    showEnd("You win!");
+                    return;
+                }
+                if (isBoardFull()) {
+                    showEnd("It's a tie!");
+                    return;
+                }
+                computerMove();
+            }
+        }
+    }
+
+    private void computerMove() {
+        int row, col;
+        do {
+            row = rand.nextInt(3);
+            col = rand.nextInt(3);
+        } while (!buttons[row][col].getText().equals(""));
+        buttons[row][col].setText("O");
+        if (checkWin("O")) {
+            computerScore++;
+            showEnd("Computer wins!");
+        } else if (isBoardFull()) {
+            showEnd("It's a tie!");
+        }
+    }
+
+    private boolean checkWin(String symbol) {
+        // rows
+        for(int i=0;i<3;i++)
+            if (buttons[i][0].getText().equals(symbol) &&
+                    buttons[i][1].getText().equals(symbol) &&
+                    buttons[i][2].getText().equals(symbol))
+                return true;
+        // columns
+        for(int i=0;i<3;i++)
+            if (buttons[0][i].getText().equals(symbol) &&
+                    buttons[1][i].getText().equals(symbol) &&
+                    buttons[2][i].getText().equals(symbol))
+                return true;
+        // diagonals
+        if (buttons[0][0].getText().equals(symbol) &&
+                buttons[1][1].getText().equals(symbol) &&
+                buttons[2][2].getText().equals(symbol))
+            return true;
+        if (buttons[0][2].getText().equals(symbol) &&
+                buttons[1][1].getText().equals(symbol) &&
+                buttons[2][0].getText().equals(symbol))
+            return true;
+
+        return false;
+    }
+
+    private boolean isBoardFull() {
+        for(int i=0;i<3;i++)
+            for(int j=0;j<3;j++)
+                if (buttons[i][j].getText().equals(""))
+                    return false;
+        return true;
+    }
+
+    private void showEnd(String message) {
+        JOptionPane.showMessageDialog(this, message + "\n\nScore:\nYou: " + playerScore + "\nComputer: " + computerScore);
+        resetBoard();
+    }
+
+    private void resetBoard() {
+        for(int i=0;i<3;i++)
+            for(int j=0;j<3;j++)
+                buttons[i][j].setText("");
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new TicTacToeGUI());
+    }
+}
