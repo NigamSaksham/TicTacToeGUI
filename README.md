@@ -12,7 +12,6 @@ A simple GUI-based single-player Tic-Tac-Toe game developed in Java using the Sw
 
 ## Screenshots
 
-![tic_tac_toe_1](https://github.com/user-attachments/assets/4c4a9fb3-e1bb-4316-8136-e5fb50b36f0b)
 ![tic_tac_toe_2](https://github.com/user-attachments/assets/2c1218d8-9911-4e56-950a-4e0673cacfc7)
 
 ## Getting Started
