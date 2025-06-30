@@ -44,10 +44,4 @@ A simple GUI-based single-player Tic-Tac-Toe game developed in Java using the Sw
 - `TicTacToeGUI` class: Main class that sets up the UI and game logic.
 - Utilizes Java Swing for all interface elements and event handling.
 
-## License
-
-This project is licensed under the MIT License.
-
 ---
-
-*Feel free to fork, modify, and use this project for learning or personal purposes!*
